@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:grameen_school/core/routes/app_routes.dart';
-
 import 'package:get/get.dart';
 
+import 'package:grameen_school/core/routes/app_routes.dart';
 import 'package:grameen_school/core/theme/app_colors.dart';
 import 'package:grameen_school/core/widgets/app_bottom_navigation.dart';
+import 'package:grameen_school/modules/courses/widgets/course_list_card.dart';
 
 class CoursesScreen extends StatelessWidget {
   const CoursesScreen({super.key});
 
-  static const categories = [
+  static const List<String> categories = [
     'All',
     'Class 1-5',
     'Class 6-8',
@@ -17,51 +17,109 @@ class CoursesScreen extends StatelessWidget {
     'College',
   ];
 
-  static const courses = [
-    (
-    title: 'Complete English Grammar for Beginners',
-    instructor: 'Dr. Farhana Islam',
-    rating: '4.8',
-    reviews: '1.2K',
-    lessons: '35 Lessons',
-    price: '৳1,200',
-    image: 'assets/images/course_english.png',
+  static const List<CourseListData> courses = [
+    CourseListData(
+      title: 'Complete English Grammar for Beginners',
+      image: 'assets/images/course_english.png',
+      instructor: '',
+      instructorImage: '',
+      rating: '4.8',
+      reviews: '1.2K',
+      duration: '35 Lessons',
+      price: '৳1,200',
+      oldPrice: '৳1,500',
+      discount: '20% OFF',
     ),
-    (
-    title: 'Mathematics for Class 8',
-    instructor: 'Md. Hasan Sir',
-    rating: '4.7',
-    reviews: '980',
-    lessons: '40 Lessons',
-    price: '৳1,000',
-    image: 'assets/images/course_math.png',
+
+    CourseListData(
+      title: 'Mathematics Mastery for Class 8',
+      image: 'assets/images/course_math.png',
+      instructor: '',
+      instructorImage: '',
+      rating: '4.9',
+      reviews: '1.5K',
+      duration: '42 Lessons',
+      price: '৳1,000',
+      oldPrice: '৳1,300',
+      discount: '23% OFF',
     ),
-    (
-    title: 'Science Fundamentals',
-    instructor: 'Dr. Nusrat Jahan',
-    rating: '4.8',
-    reviews: '2.1K',
-    lessons: '50 Lessons',
-    price: '৳1,500',
-    image: 'assets/images/course_science.png',
+
+    CourseListData(
+      title: 'Science Fundamentals for Students',
+      image: 'assets/images/course_science.png',
+      instructor: '',
+      instructorImage: '',
+      rating: '4.8',
+      reviews: '2.1K',
+      duration: '50 Lessons',
+      price: '৳1,500',
+      oldPrice: '৳1,800',
+      discount: '17% OFF',
     ),
-    (
-    title: 'ICT for Everyone',
-    instructor: 'Tanvir Ahmed',
-    rating: '4.6',
-    reviews: '840',
-    lessons: '28 Lessons',
-    price: '৳900',
-    image: 'assets/images/course_ict.png',
+
+    CourseListData(
+      title: 'ICT & Digital Skills for Everyone',
+      image: 'assets/images/course_ict.png',
+      instructor: '',
+      instructorImage: '',
+      rating: '4.7',
+      reviews: '1.1K',
+      duration: '30 Lessons',
+      price: '৳900',
+      oldPrice: '৳1,200',
+      discount: '25% OFF',
     ),
-    (
-    title: 'Spoken English Mastery',
-    instructor: 'Sadia Rahman',
-    rating: '4.9',
-    reviews: '1.8K',
-    lessons: '32 Lessons',
-    price: '৳1,100',
-    image: 'assets/images/course_spoken_english.png',
+
+    CourseListData(
+      title: 'Spoken English Mastery',
+      image: 'assets/images/course_spoken_english.png',
+      instructor: '',
+      instructorImage: '',
+      rating: '4.9',
+      reviews: '1.8K',
+      duration: '32 Lessons',
+      price: '৳1,100',
+      oldPrice: '৳1,400',
+      discount: '21% OFF',
+    ),
+
+    CourseListData(
+      title: 'Bangla Grammar & Writing Skills',
+      image: 'assets/images/course_bangla.png',
+      instructor: '',
+      instructorImage: '',
+      rating: '4.8',
+      reviews: '950',
+      duration: '28 Lessons',
+      price: '৳800',
+      oldPrice: '৳1,000',
+      discount: '20% OFF',
+    ),
+
+    CourseListData(
+      title: 'General Mathematics for Class 6-8',
+      image: 'assets/images/course_general_math.png',
+      instructor: '',
+      instructorImage: '',
+      rating: '4.8',
+      reviews: '1.3K',
+      duration: '45 Lessons',
+      price: '৳1,200',
+      oldPrice: '৳1,500',
+      discount: '20% OFF',
+    ),
+
+    CourseListData(
+      title: 'Physics Fundamentals for Beginners',
+      image: 'assets/images/course_physics.png',
+      instructor: '',
+      instructorImage: '',
+      rating: '4.7',
+      reviews: '870',
+      duration: '38 Lessons',
+      price: '৳1,400',
+      oldPrice: '৳1,700',
+      discount: '18% OFF',
     ),
   ];
 
@@ -74,19 +132,33 @@ class CoursesScreen extends StatelessWidget {
           children: [
             _buildHeader(),
             _buildCategories(),
+
+            const SizedBox(height: 4),
+
             Expanded(
               child: ListView.separated(
                 padding: const EdgeInsets.fromLTRB(
                   16,
-                  14,
+                  10,
                   16,
                   20,
                 ),
                 itemCount: courses.length,
-                separatorBuilder: (_, _) => const SizedBox(height: 16),
+                separatorBuilder: (_, __) => const SizedBox(height: 16),
                 itemBuilder: (context, index) {
-                  return _CourseCard(
-                    course: courses[index],
+                  final course = courses[index];
+
+                  return CourseListCard(
+                    course: course,
+                    onTap: () {
+                      Get.toNamed(
+                        AppRoutes.courseDetails,
+                        arguments: course,
+                      );
+                    },
+                    onFavorite: () {
+
+                    },
                   );
                 },
               ),
@@ -102,15 +174,31 @@ class CoursesScreen extends StatelessWidget {
 
   Widget _buildHeader() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 14, 16, 12),
+      padding: const EdgeInsets.fromLTRB(
+        16,
+        14,
+        16,
+        12,
+      ),
       child: Row(
         children: [
-          const Icon(
-            Icons.arrow_back_rounded,
-            size: 24,
-            color: Color(0xFF172554),
+          InkWell(
+            onTap: () {
+              Get.back();
+            },
+            borderRadius: BorderRadius.circular(20),
+            child: const Padding(
+              padding: EdgeInsets.all(2),
+              child: Icon(
+                Icons.arrow_back_rounded,
+                size: 24,
+                color: Color(0xFF172554),
+              ),
+            ),
           ),
+
           const SizedBox(width: 16),
+
           const Expanded(
             child: Text(
               'Courses',
@@ -121,10 +209,16 @@ class CoursesScreen extends StatelessWidget {
               ),
             ),
           ),
+
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+
+            },
             padding: EdgeInsets.zero,
-            constraints: const BoxConstraints(),
+            constraints: const BoxConstraints(
+              minWidth: 40,
+              minHeight: 40,
+            ),
             icon: const Icon(
               Icons.search_rounded,
               size: 25,
@@ -140,10 +234,12 @@ class CoursesScreen extends StatelessWidget {
     return SizedBox(
       height: 42,
       child: ListView.separated(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 16,
+        ),
         scrollDirection: Axis.horizontal,
         itemCount: categories.length,
-        separatorBuilder: (_, _) => const SizedBox(width: 8),
+        separatorBuilder: (_, __) => const SizedBox(width: 8),
         itemBuilder: (context, index) {
           final selected = index == 0;
 
@@ -177,149 +273,6 @@ class CoursesScreen extends StatelessWidget {
             ),
           );
         },
-      ),
-    );
-  }
-}
-
-class _CourseCard extends StatelessWidget {
-  const _CourseCard({
-    required this.course,
-  });
-
-  final ({
-  String title,
-  String instructor,
-  String rating,
-  String reviews,
-  String lessons,
-  String price,
-  String image,
-  }) course;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      borderRadius: BorderRadius.circular(12),
-      onTap: () {
-        Get.toNamed(
-          AppRoutes.courseDetails,
-          arguments: course,
-        );
-      },
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: Image.asset(
-              course.image,
-              width: 92,
-              height: 92,
-              fit: BoxFit.cover,
-              errorBuilder: (_, _, _) {
-                return Container(
-                  width: 92,
-                  height: 92,
-                  color: const Color(0xFFE2E8F0),
-                  child: const Icon(
-                    Icons.menu_book_rounded,
-                    color: Color(0xFF94A3B8),
-                  ),
-                );
-              },
-            ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        course.title,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          height: 1.25,
-                          color: Color(0xFF172554),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 6),
-                    const Icon(
-                      Icons.favorite_border_rounded,
-                      size: 23,
-                      color: Color(0xFFEF6B7A),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  course.instructor,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontSize: 11,
-                    color: Color(0xFF64748B),
-                  ),
-                ),
-                const SizedBox(height: 7),
-                Row(
-                  children: [
-                    const Icon(
-                      Icons.star_rounded,
-                      size: 17,
-                      color: Color(0xFFFBBF24),
-                    ),
-                    const SizedBox(width: 3),
-                    Text(
-                      course.rating,
-                      style: const TextStyle(
-                        fontSize: 11,
-                        fontWeight: FontWeight.w600,
-                        color: Color(0xFF475569),
-                      ),
-                    ),
-                    const SizedBox(width: 3),
-                    Text(
-                      '(${course.reviews})',
-                      style: const TextStyle(
-                        fontSize: 10,
-                        color: Color(0xFF94A3B8),
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Text(
-                      course.lessons,
-                      style: const TextStyle(
-                        fontSize: 10,
-                        color: Color(0xFF64748B),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 5),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: Text(
-                    course.price,
-                    style: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w700,
-                      color: Color(0xFF4338CA),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
       ),
     );
   }

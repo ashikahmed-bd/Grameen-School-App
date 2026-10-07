@@ -65,76 +65,80 @@ class RecommendedCourseSlider extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // HEADER
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text(
-              'Recommended Courses',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w700,
-                color: Color(0xff111827),
-              ),
-            ),
-
-            GestureDetector(
-              onTap: onSeeAll,
-              child: const Text(
-                'See all',
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                'Recommended Courses',
                 style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: Color(0xff4F46E5),
+                  fontSize: 20,
+                  fontWeight: FontWeight.w700,
+                  color: Color(0xff111827),
                 ),
               ),
-            ),
-          ],
+
+              GestureDetector(
+                onTap: onSeeAll,
+                child: const Text(
+                  'See all',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xff4F46E5),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
 
         const SizedBox(height: 14),
 
         // COURSE SLIDER
-        LayoutBuilder(
-          builder: (context, constraints) {
-            const spacing = 12.0;
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              const spacing = 12.0;
 
-            // 2 cards visible
-            final cardWidth = (constraints.maxWidth - spacing) / 2;
+              // 2 cards visible
+              final cardWidth = (constraints.maxWidth - spacing) / 2;
 
-            return SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              physics: const BouncingScrollPhysics(),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: List.generate(
-                  courses.length,
-                      (index) {
-                    return Padding(
-                      padding: EdgeInsets.only(
-                        right: index == courses.length - 1 ? 0 : spacing,
-                      ),
-                      child: SizedBox(
-                        width: cardWidth,
-                        child: _CourseCard(
-                          course: courses[index],
+              return SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                physics: const BouncingScrollPhysics(),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: List.generate(
+                    courses.length,
+                        (index) {
+                      return Padding(
+                        padding: EdgeInsets.only(
+                          right: index == courses.length - 1 ? 0 : spacing,
                         ),
-                      ),
-                    );
-                  },
+                        child: SizedBox(
+                          width: cardWidth,
+                          child: _CourseCard(
+                            course: courses[index],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
+
       ],
     );
   }
 }
 
-// ============================================================
 // COURSE CARD
-// ============================================================
-
 class _CourseCard extends StatelessWidget {
   final CourseModel course;
 
