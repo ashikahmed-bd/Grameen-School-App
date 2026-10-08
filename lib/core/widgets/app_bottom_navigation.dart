@@ -18,83 +18,122 @@ class BottomNavigation extends StatelessWidget {
     AppRoutes.profile,
   ];
 
+  static const List<String> _labels = [
+    'Home',
+    'Courses',
+    'Meet',
+    'Learning',
+    'Profile',
+  ];
+
+  static const List<IconData> _icons = [
+    Icons.home_outlined,
+    Icons.menu_book_outlined,
+    Icons.video_call_outlined,
+    Icons.play_circle_outline_rounded,
+    Icons.person_outline_rounded,
+  ];
+
+  static const List<IconData> _selectedIcons = [
+    Icons.home_rounded,
+    Icons.menu_book_rounded,
+    Icons.video_call_rounded,
+    Icons.play_circle_rounded,
+    Icons.person_rounded,
+  ];
+
+  @override
   @override
   Widget build(BuildContext context) {
-    return NavigationBarTheme(
-      data: NavigationBarThemeData(
-        height: 68,
-        backgroundColor: Colors.white,
-        elevation: 0,
-
-        indicatorColor: AppColors.primary.withValues(alpha: 0.12),
-        indicatorShape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(14),
-        ),
-        labelTextStyle: WidgetStateProperty.resolveWith(
-              (states) {
-            final selected = states.contains(WidgetState.selected);
-
-            return TextStyle(
-              fontSize: 11,
-              fontWeight: selected ? FontWeight.w600 : FontWeight.w500,
-              color: selected
-                  ? AppColors.primary
-                  : Colors.grey.shade600,
-            );
-          },
-        ),
-        iconTheme: WidgetStateProperty.resolveWith(
-              (states) {
-            final selected = states.contains(WidgetState.selected);
-
-            return IconThemeData(
-              size: 22,
-              color: selected
-                  ? AppColors.primary
-                  : Colors.grey.shade600,
-            );
-          },
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        vertical: 2,
+        horizontal: 4
+      ),
+      decoration: const BoxDecoration(
+        color: Colors.white,
+      ),
+      child: Row(
+        children: List.generate(
+          _routes.length,
+              (index) => Expanded(
+            child: _buildNavItem(
+              context: context,
+              index: index,
+            ),
+          ),
         ),
       ),
-      child: NavigationBar(
-        selectedIndex: currentIndex,
-        onDestinationSelected: (index) {
-          if (index == currentIndex) {
-            return;
-          }
+    );
+  }
+
+  Widget _buildNavItem({
+    required BuildContext context,
+    required int index,
+  }) {
+    final bool isSelected = currentIndex == index;
+
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: () {
+          if (index == currentIndex) return;
 
           Navigator.pushReplacementNamed(
             context,
             _routes[index],
           );
         },
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.home_outlined),
-            selectedIcon: Icon(Icons.home_rounded),
-            label: 'Home',
+        borderRadius: BorderRadius.circular(16),
+        splashColor: AppColors.primary.withValues(alpha: 0.08),
+        highlightColor: AppColors.primary.withValues(alpha: 0.04),
+        child: SizedBox(
+          height: 72,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              AnimatedContainer(
+                duration: const Duration(milliseconds: 180),
+                curve: Curves.easeOut,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 13,
+                  vertical: 4,
+                ),
+                decoration: BoxDecoration(
+                  color: isSelected
+                      ? AppColors.primary.withValues(alpha: 0.12)
+                      : Colors.transparent,
+                  borderRadius: BorderRadius.circular(14),
+                ),
+                child: Icon(
+                  isSelected
+                      ? _selectedIcons[index]
+                      : _icons[index],
+                  size: 22,
+                  color: isSelected
+                      ? AppColors.primary
+                      : Colors.grey.shade600,
+                ),
+              ),
+              const SizedBox(height: 2),
+              Text(
+                _labels[index],
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: 11,
+                  height: 1.0,
+                  fontWeight: isSelected
+                      ? FontWeight.w600
+                      : FontWeight.w500,
+                  color: isSelected
+                      ? AppColors.primary
+                      : Colors.grey.shade600,
+                ),
+              ),
+            ],
           ),
-          NavigationDestination(
-            icon: Icon(Icons.menu_book_outlined),
-            selectedIcon: Icon(Icons.menu_book_rounded),
-            label: 'Courses',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.video_call_outlined),
-            selectedIcon: Icon(Icons.video_call_rounded),
-            label: 'Meet',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.play_circle_outline_rounded),
-            selectedIcon: Icon(Icons.play_circle_rounded),
-            label: 'Learning',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.person_outline_rounded),
-            selectedIcon: Icon(Icons.person_rounded),
-            label: 'Profile',
-          ),
-        ],
+        ),
       ),
     );
   }
