@@ -37,7 +37,7 @@ class AppTextStyles {
 
   // Default body text
   static const TextStyle body = TextStyle(
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: FontWeight.w400,
     color: AppColors.textPrimary,
   );
