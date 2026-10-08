@@ -6,6 +6,7 @@ import 'package:grameen_school/modules/auth/pages/login_screen.dart';
 import 'package:grameen_school/modules/auth/pages/register_screen.dart';
 import 'package:grameen_school/modules/auth/pages/reset_password_screen.dart';
 import 'package:grameen_school/modules/auth/pages/verify_email_screen.dart';
+import 'package:grameen_school/modules/courses/pages/course_details_screen.dart';
 
 import 'package:grameen_school/modules/courses/pages/courses_screen.dart';
 import 'package:grameen_school/modules/home/pages/home_screen.dart';
@@ -69,6 +70,11 @@ abstract final class AppPages {
     GetPage(
       name: AppRoutes.profile,
       page: () => const ProfileScreen(),
+    ),
+
+    GetPage(
+      name: AppRoutes.courseDetails,
+      page: () => const CourseDetailsScreen(),
     ),
   ];
 }

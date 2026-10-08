@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:grameen_school/core/routes/app_routes.dart';
 
 import 'course_list_card.dart';
 
@@ -66,9 +67,6 @@ class TrendingCourses extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // ====================================================
-        // Header
-        // ====================================================
 
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -108,10 +106,6 @@ class TrendingCourses extends StatelessWidget {
 
         const SizedBox(height: 14),
 
-        // ====================================================
-        // Course List
-        // ====================================================
-
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: ListView.separated(
@@ -127,7 +121,11 @@ class TrendingCourses extends StatelessWidget {
               return CourseListCard(
                 course: course,
                 onTap: () {
-                  // Open course details
+                  Navigator.pushNamed(
+                    context,
+                    AppRoutes.courseDetails,
+                    arguments: course,
+                  );
                 },
                 onFavorite: () {
                   // Add/remove favorite

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:grameen_school/core/theme/app_colors.dart';
 import 'package:grameen_school/core/widgets/app_bottom_navigation.dart';
+import 'package:grameen_school/modules/meet/widgets/meeting_card.dart';
 
 class MeetScreen extends StatelessWidget {
   const MeetScreen({super.key});
@@ -14,10 +15,6 @@ class MeetScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            // ============================================================
-            // HEADER
-            // ============================================================
-
             Padding(
               padding: const EdgeInsets.fromLTRB(
                 16,
@@ -53,16 +50,6 @@ class MeetScreen extends StatelessWidget {
               ),
             ),
 
-            // ============================================================
-            // TABS
-            // ============================================================
-
-            const _MeetTabs(),
-
-            // ============================================================
-            // BODY
-            // ============================================================
-
             Expanded(
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
@@ -73,10 +60,6 @@ class MeetScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // ======================================================
-                    // LIVE CLASS BANNER
-                    // ======================================================
-
                     const Padding(
                       padding: EdgeInsets.symmetric(
                         horizontal: 16,
@@ -86,10 +69,6 @@ class MeetScreen extends StatelessWidget {
 
                     const SizedBox(height: 22),
 
-                    // ======================================================
-                    // COURSE HEADER
-                    // ======================================================
-
                     Padding(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 16,
@@ -98,7 +77,7 @@ class MeetScreen extends StatelessWidget {
                         children: [
                           const Expanded(
                             child: Text(
-                              'Flutter Complete Course',
+                              'All Live Classes',
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w700,
@@ -107,20 +86,25 @@ class MeetScreen extends StatelessWidget {
                             ),
                           ),
 
-                          Container(
-                            width: 30,
-                            height: 30,
-                            decoration: BoxDecoration(
-                              color: AppColors.surface,
-                              borderRadius: BorderRadius.circular(9),
-                              border: Border.all(
-                                color: AppColors.border,
+                          // VIEW ALL BUTTON
+                          TextButton(
+                            onPressed: () {},
+                            style: TextButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 6,
                               ),
+                              minimumSize: Size.zero,
+                              tapTargetSize:
+                              MaterialTapTargetSize.shrinkWrap,
                             ),
-                            child: const Icon(
-                              Icons.arrow_forward_ios_rounded,
-                              size: 12,
-                              color: AppColors.textSecondary,
+                            child: const Text(
+                              'View All',
+                              style: TextStyle(
+                                fontSize: 11,
+                                fontWeight: FontWeight.w700,
+                                color: AppColors.primary,
+                              ),
                             ),
                           ),
                         ],
@@ -129,11 +113,7 @@ class MeetScreen extends StatelessWidget {
 
                     const SizedBox(height: 12),
 
-                    // ======================================================
-                    // CLASS LIST
-                    // ======================================================
-
-                    const _ClassList(),
+                    const _MeetingList(),
                   ],
                 ),
               ),
@@ -142,10 +122,6 @@ class MeetScreen extends StatelessWidget {
         ),
       ),
 
-      // ================================================================
-      // BOTTOM NAVIGATION
-      // ================================================================
-
       bottomNavigationBar: const BottomNavigation(
         currentIndex: 2,
       ),
@@ -153,18 +129,14 @@ class MeetScreen extends StatelessWidget {
   }
 }
 
-// ========================================================================
-// HEADER ICON BUTTON
-// ========================================================================
-
 class _HeaderIconButton extends StatelessWidget {
-  final IconData icon;
-  final VoidCallback? onTap;
-
   const _HeaderIconButton({
     required this.icon,
     this.onTap,
   });
+
+  final IconData icon;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -197,100 +169,6 @@ class _HeaderIconButton extends StatelessWidget {
   }
 }
 
-// ========================================================================
-// TABS
-// ========================================================================
-
-class _MeetTabs extends StatelessWidget {
-  const _MeetTabs();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 45,
-      decoration: const BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            color: AppColors.border,
-            width: 1,
-          ),
-        ),
-      ),
-      child: const Row(
-        children: [
-          Expanded(
-            child: _TabItem(
-              title: 'Upcoming',
-              selected: true,
-            ),
-          ),
-          Expanded(
-            child: _TabItem(
-              title: 'Previous',
-              selected: false,
-            ),
-          ),
-          Expanded(
-            child: _TabItem(
-              title: 'Recordings',
-              selected: false,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _TabItem extends StatelessWidget {
-  final String title;
-  final bool selected;
-
-  const _TabItem({
-    required this.title,
-    required this.selected,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.bottomCenter,
-      children: [
-        Center(
-          child: Text(
-            title,
-            style: TextStyle(
-              fontSize: 12,
-              fontWeight: selected
-                  ? FontWeight.w700
-                  : FontWeight.w500,
-              color: selected
-                  ? AppColors.primary
-                  : AppColors.textPrimary,
-            ),
-          ),
-        ),
-
-        if (selected)
-          Container(
-            height: 2.5,
-            margin: const EdgeInsets.symmetric(
-              horizontal: 10,
-            ),
-            decoration: BoxDecoration(
-              color: AppColors.primary,
-              borderRadius: BorderRadius.circular(20),
-            ),
-          ),
-      ],
-    );
-  }
-}
-
-// ========================================================================
-// LIVE CLASS BANNER
-// ========================================================================
-
 class _LiveClassBanner extends StatelessWidget {
   const _LiveClassBanner();
 
@@ -315,10 +193,6 @@ class _LiveClassBanner extends StatelessWidget {
       ),
       child: Stack(
         children: [
-          // ==============================================================
-          // DECORATIVE CIRCLE
-          // ==============================================================
-
           Positioned(
             right: -35,
             top: -55,
@@ -345,10 +219,6 @@ class _LiveClassBanner extends StatelessWidget {
             ),
           ),
 
-          // ==============================================================
-          // CONTENT
-          // ==============================================================
-
           Padding(
             padding: const EdgeInsets.fromLTRB(
               14,
@@ -359,10 +229,7 @@ class _LiveClassBanner extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // ========================================================
                 // VIDEO ICON
-                // ========================================================
-
                 Container(
                   width: 40,
                   height: 40,
@@ -379,10 +246,7 @@ class _LiveClassBanner extends StatelessWidget {
 
                 const SizedBox(width: 10),
 
-                // ========================================================
                 // TEXT
-                // ========================================================
-
                 const Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -432,10 +296,7 @@ class _LiveClassBanner extends StatelessWidget {
                   ),
                 ),
 
-                // ========================================================
                 // TEACHER ILLUSTRATION
-                // ========================================================
-
                 SizedBox(
                   width: 76,
                   height: 92,
@@ -496,370 +357,73 @@ class _LiveClassBanner extends StatelessWidget {
   }
 }
 
-// ========================================================================
-// CLASS LIST
-// ========================================================================
-
-class _ClassList extends StatelessWidget {
-  const _ClassList();
+// MEETING LIST
+class _MeetingList extends StatelessWidget {
+  const _MeetingList();
 
   @override
   Widget build(BuildContext context) {
-    final classes = [
-      const _ClassData(
-        month: 'OCT',
-        date: '12',
-        day: 'Sat',
-        title: 'Introduction to Flutter',
-        time: '10:00 AM - 11:30 AM',
-        instructor: 'Rahim Uddin',
-        join: true,
-      ),
-      const _ClassData(
-        month: 'OCT',
-        date: '15',
-        day: 'Tue',
-        title: 'Setting up Development Environment',
-        time: '10:00 AM - 11:30 AM',
-        instructor: 'Rahim Uddin',
-      ),
-      const _ClassData(
-        month: 'OCT',
-        date: '18',
-        day: 'Fri',
-        title: 'Your First Flutter App',
-        time: '10:00 AM - 11:30 AM',
-        instructor: 'Rahim Uddin',
-      ),
-      const _ClassData(
-        month: 'OCT',
-        date: '22',
-        day: 'Tue',
-        title: 'Flutter Widgets Deep Dive',
-        time: '10:00 AM - 11:30 AM',
-        instructor: 'Taskin Ahmed',
-      ),
-      const _ClassData(
-        month: 'OCT',
-        date: '25',
-        day: 'Fri',
-        title: 'State Management',
-        time: '10:00 AM - 11:30 AM',
-        instructor: 'Rahim Uddin',
-      ),
-    ];
-
-    return ListView.separated(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      padding: const EdgeInsets.symmetric(
+    return const Padding(
+      padding: EdgeInsets.symmetric(
         horizontal: 16,
       ),
-      itemCount: classes.length,
-      separatorBuilder: (_, __) {
-        return const SizedBox(height: 10);
-      },
-      itemBuilder: (context, index) {
-        return _ClassCard(
-          data: classes[index],
-        );
-      },
-    );
-  }
-}
-
-// ========================================================================
-// CLASS CARD
-// ========================================================================
-
-class _ClassCard extends StatelessWidget {
-  final _ClassData data;
-
-  const _ClassCard({
-    required this.data,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 10,
-        vertical: 9,
-      ),
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: BorderRadius.circular(15),
-        border: Border.all(
-          color: AppColors.border,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.025),
-            blurRadius: 12,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
+      child: Column(
         children: [
-          // ==============================================================
-          // DATE
-          // ==============================================================
-
-          Container(
-            width: 46,
-            height: 64,
-            decoration: BoxDecoration(
-              color: AppColors.primary.withOpacity(0.08),
-              borderRadius: BorderRadius.circular(11),
-              border: Border.all(
-                color: AppColors.primary.withOpacity(0.12),
-              ),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  data.month,
-                  style: const TextStyle(
-                    fontSize: 8,
-                    fontWeight: FontWeight.w800,
-                    color: AppColors.primary,
-                  ),
-                ),
-
-                const SizedBox(height: 2),
-
-                Text(
-                  data.date,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    height: 1,
-                    fontWeight: FontWeight.w800,
-                    color: AppColors.primary,
-                  ),
-                ),
-
-                const SizedBox(height: 3),
-
-                Text(
-                  data.day,
-                  style: const TextStyle(
-                    fontSize: 8,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textSecondary,
-                  ),
-                ),
-              ],
-            ),
+          MeetingCard(
+            month: 'OCT',
+            date: '12',
+            day: 'Sat',
+            title: 'Introduction to Flutter',
+            time: '10:00 AM - 11:30 AM',
+            instructor: 'Rahim Uddin',
+            isLive: true,
           ),
 
-          const SizedBox(width: 11),
+          SizedBox(height: 4),
 
-          // ==============================================================
-          // CLASS INFO
-          // ==============================================================
-
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  data.title,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontSize: 12,
-                    height: 1.25,
-                    fontWeight: FontWeight.w700,
-                    color: AppColors.textPrimary,
-                  ),
-                ),
-
-                const SizedBox(height: 5),
-
-                // Time
-                Row(
-                  children: [
-                    const Icon(
-                      Icons.access_time_rounded,
-                      size: 12,
-                      color: AppColors.textSecondary,
-                    ),
-
-                    const SizedBox(width: 4),
-
-                    Flexible(
-                      child: Text(
-                        data.time,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          fontSize: 9,
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.textSecondary,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-
-                const SizedBox(height: 5),
-
-                // Instructor
-                Row(
-                  children: [
-                    Container(
-                      width: 20,
-                      height: 20,
-                      decoration: BoxDecoration(
-                        color: AppColors.primary.withOpacity(0.08),
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: AppColors.border,
-                        ),
-                      ),
-                      child: const Icon(
-                        Icons.person_rounded,
-                        size: 12,
-                        color: AppColors.primary,
-                      ),
-                    ),
-
-                    const SizedBox(width: 5),
-
-                    Flexible(
-                      child: Text(
-                        data.instructor,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          fontSize: 9,
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.textSecondary,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+          MeetingCard(
+            month: 'OCT',
+            date: '15',
+            day: 'Tue',
+            title: 'Setting up Development Environment',
+            time: '10:00 AM - 11:30 AM',
+            instructor: 'Rahim Uddin',
           ),
 
-          const SizedBox(width: 7),
+          SizedBox(height: 4),
 
-          // ==============================================================
-          // ACTION
-          // ==============================================================
+          MeetingCard(
+            month: 'OCT',
+            date: '18',
+            day: 'Fri',
+            title: 'Your First Flutter App',
+            time: '10:00 AM - 11:30 AM',
+            instructor: 'Rahim Uddin',
+          ),
 
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Icon(
-                Icons.more_vert_rounded,
-                size: 18,
-                color: AppColors.textSecondary,
-              ),
+          SizedBox(height: 4),
 
-              const SizedBox(height: 7),
+          MeetingCard(
+            month: 'OCT',
+            date: '22',
+            day: 'Tue',
+            title: 'Flutter Widgets Deep Dive',
+            time: '10:00 AM - 11:30 AM',
+            instructor: 'Taskin Ahmed',
+          ),
 
-              if (data.join)
-              // --------------------------------------------------------
-              // JOIN CLASS
-              // --------------------------------------------------------
-                Container(
-                  height: 34,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 13,
-                  ),
-                  decoration: BoxDecoration(
-                    color: AppColors.primary,
-                    borderRadius: BorderRadius.circular(9),
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.primary.withOpacity(0.18),
-                        blurRadius: 8,
-                        offset: const Offset(0, 4),
-                      ),
-                    ],
-                  ),
-                  alignment: Alignment.center,
-                  child: const Text(
-                    'Join Class',
-                    style: TextStyle(
-                      fontSize: 9,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.white,
-                    ),
-                  ),
-                )
-              else
-              // --------------------------------------------------------
-              // REMIND ME
-              // --------------------------------------------------------
-                Container(
-                  height: 34,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 9,
-                  ),
-                  decoration: BoxDecoration(
-                    color: AppColors.primary.withOpacity(0.07),
-                    borderRadius: BorderRadius.circular(9),
-                    border: Border.all(
-                      color: AppColors.primary.withOpacity(0.12),
-                    ),
-                  ),
-                  child: const Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        Icons.notifications_none_rounded,
-                        size: 14,
-                        color: AppColors.primary,
-                      ),
+          SizedBox(height: 4),
 
-                      SizedBox(width: 3),
-
-                      Text(
-                        'Remind Me',
-                        style: TextStyle(
-                          fontSize: 9,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.primary,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-            ],
+          MeetingCard(
+            month: 'OCT',
+            date: '25',
+            day: 'Fri',
+            title: 'State Management',
+            time: '10:00 AM - 11:30 AM',
+            instructor: 'Rahim Uddin',
           ),
         ],
       ),
     );
   }
-}
-
-// ========================================================================
-// CLASS DATA
-// ========================================================================
-
-class _ClassData {
-  final String month;
-  final String date;
-  final String day;
-  final String title;
-  final String time;
-  final String instructor;
-  final bool join;
-
-  const _ClassData({
-    required this.month,
-    required this.date,
-    required this.day,
-    required this.title,
-    required this.time,
-    required this.instructor,
-    this.join = false,
-  });
 }
